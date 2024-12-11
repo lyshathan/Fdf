@@ -4,6 +4,7 @@ NAME = fdf
 RM = rm -rf
 
 SRCS = fdf.c \
+fdf_utils.c \
 ft_split_set.c \
 print_map.c
 
@@ -69,7 +70,7 @@ get_next_line.c \
 get_next_line_utils.c
 
 LIBFT_FILES = $(addprefix $(LIBFT_PATH)/, $(LIBFT_FUNCTIONS)) $(LIBFT_PATH)/libft.h $(LIBFT_PATH)/Makefile
-MLX_FILES = $(MINILIBX_PATH)/mlx.h $(MINILIBX_PATH)/mlx_int.h $(MINILIBX_PATH)/Makefile
+MLX_FILES = $(MINILIBX_PATH)/mlx.h $(MINILIBX_PATH)/mlx_int.h $(MINILIBX_PATH)/Makefile $(MINILIBX_PATH)/Makefile.mk
 
 all: $(NAME)
 
@@ -82,7 +83,7 @@ $(OBJS_DIR)/%.o: %.c fdf.h Makefile
 $(NAME): $(OBJS_DIR) $(OBJS) $(LIBFT_FILES) $(MLX_FILES)
 	make -C $(MINILIBX_PATH)
 	make -C $(LIBFT_PATH)
-	$(CC) $(CFLAGS) $(OBJS) -L$(MINILIBX_PATH) -lmlx -L/usr/lib -I$(MINILIBX_PATH) -lXext -lX11 -lm -lz $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -L$(MINILIBX_PATH) -lmlx -lmlx_Linux -L/usr/lib -I$(MINILIBX_PATH) -lXext -lX11 -lm -lz $(LIBFT) -o $(NAME)
 
 clean:
 	make -C $(LIBFT_PATH) clean
