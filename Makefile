@@ -5,7 +5,12 @@ RM = rm -rf
 
 SRCS = fdf.c \
 fdf_utils.c \
+parse_map.c \
 ft_split_set.c \
+set_iso.c \
+draw_grid.c \
+hook.c \
+find_scale.c \
 print_map.c
 
 OBJS_DIR = objects

@@ -6,7 +6,7 @@
 /*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:13:07 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/11 17:16:41 by lthan            ###   ########.fr       */
+/*   Updated: 2024/12/12 17:17:26 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	print_map(t_point **map)
 		x = 0;
 		while (map[y][x].z)
 		{
-			ft_printf("%d	", map[y][x].x);
-			// ft_printf("%d	", map[y][x].y);
+			printf("%f|", map[y][x].y);
+			printf("%f	", map[y][x].x);
 			// ft_printf("%d	", *(map[y][x].z));
-			// ft_printf("%s	", map[y][x].color);
+			// ft_printf("%d	", map[y][x].color);
 			x++;
 		}
 		ft_printf("\n");
