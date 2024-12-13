@@ -6,7 +6,7 @@
 /*   By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:01:33 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/13 18:29:43 by ly-sha           ###   ########.fr       */
+/*   Updated: 2024/12/13 18:54:19 by ly-sha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # endif
 
 # ifndef COLOR
-# define COLOR 0x0FFFF00
+# define COLOR 0x0FFFFFF
 # endif
 
 typedef struct	s_map_info {
