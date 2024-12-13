@@ -2,8 +2,8 @@ int	set_point(char *s, int index, int y, t_point *parse)
 {
 	parse[index].x = index;
 	parse[index].y = y;
-	
-	
+
+
 }
 
 int	set_z(int **z, char *s)
@@ -21,7 +21,7 @@ t_point *ft_parse_line(int fd, int y)
 	char	**split;
 	int		i;
 	t_point	*parse_line;
-	
+
 	line = get_next_line(fd);
 	split = ft_split_set(line, " \n");
 	if (!split)
@@ -67,19 +67,19 @@ t_point point_a;
 // 	dx = ft_abs(iso_x(point_b)) - ft_abs(iso_x(point_a));
 // 	dy = ft_abs(iso_y(point_b)) - ft_abs(iso_y(point_a));
 // 	ft_printf("==> dx = %f | dy = %f\n",dx, dy);
-	
+
 // 	if (dx >= dy)
 // 		step = dx;
 // 	else
 // 		step = dy;
-	
+
 // 	dx = dx / step;
 // 	dy = dy / step;
 // 	ft_printf("step = %d | dx = %f | dy = %f\n", step, dx, dy);
-	
+
 // 	x = iso_x(point_a);
 // 	y = iso_y(point_a);
-	
+
 // 	// (void)shift;
 // 	// (void)mlx;
 // 	// (void)mlx_win;
@@ -109,7 +109,7 @@ void	print_square(t_setup setup, int x, int y, int size, int color)
 		}
 		sq_y++;
 	}
-	
+
 }
 
 void put_pixel_to_image(t_img *img, int x, int y, int color)
@@ -140,4 +140,29 @@ void put_pixel_to_image(t_img *img, int x, int y, int color)
         //     dst[3] = (color >> 0) & 0xFF;    // Blue
         // }
     }
+}
+
+void	aff_map(t_setup stp, t_point **map)
+{
+	int	x;
+	int	y;
+	int	col;
+
+	y = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x].z)
+		{
+			if (*(map[y][x].z) > 0)
+				col = 0x00FF0000;
+			else
+				col = 0x0000FFFF;
+			mlx_pixel_put(stp.mlx, stp.win,
+				(map[y][x].x * stp.scale + stp.shift_x),
+				(map[y][x].y * stp.scale + stp.shift_y), col);
+			x++;
+		}
+		y++;
+	}
 }

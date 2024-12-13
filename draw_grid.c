@@ -3,52 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   draw_grid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:46:30 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/12 16:58:54 by lthan            ###   ########.fr       */
+/*   Updated: 2024/12/13 18:11:59 by ly-sha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	draw_line(t_img *img, t_setup stp, t_point point_a, t_point point_b)
+float	calcul_draw_line(t_setup stp, t_point p1, t_point p2)
+{
+	float	step;
+
+	if (ft_abs(p2.x - p1.x) >= ft_abs(p2.y - p1.y))
+		step = ft_abs(p2.x - p1.x);
+	else
+		step = ft_abs(p2.y - p1.y);
+	step = step * stp.scale;
+	return (step);
+}
+
+void	draw_line(t_img *img, t_setup stp, t_point p1, t_point p2)
 {
 	float	x;
 	float	y;
 	float	dx;
 	float	dy;
 	float	step;
-	int		color;
-	
-	dx = point_b.x - point_a.x;
-	dy = point_b.y - point_a.y;
-	
-	if (ft_abs(dx) >= ft_abs(dy))
-		step = ft_abs(dx);
-	else
-		step = ft_abs(dy);
-	step = step * stp.scale;
-	
-	dx = dx / step;
-	dy = dy / step;
 
-
-	x = point_a.x;
-	y = point_a.y;
-
-	float i = 1;
-	while (i <= step)
+	step = calcul_draw_line(stp, p1, p2);
+	dx = (p2.x - p1.x) / step;
+	dy = (p2.y - p1.y) / step;
+	x = p1.x;
+	y = p1.y;
+	while (step > 0)
 	{
-		color = 0x0FFFFFF;
-		if (point_b.color)
-			color = point_b.color;
-		
-		put_pixel_to_image(img, (x * stp.scale + stp.shift), (y * stp.scale + stp.shift), color);
-		
+		if (p2.col)
+			put_pixel_to_image(img, (x * stp.scale + stp.shift_x),
+				(y * stp.scale + stp.shift_y), p2.col);
+		else
+			put_pixel_to_image(img, (x * stp.scale + stp.shift_x),
+				(y * stp.scale + stp.shift_y), COLOR);
 		x = x + dx;
 		y = y + dy;
-		i++;
+		step--;
 	}
 }
 
@@ -68,7 +67,7 @@ void	draw_grid(t_img *img, t_setup stp, t_point **map)
 			{
 				draw_line(img, stp, map[y][x], map[y + 1][x]);
 			}
-			x++;	
+			x++;
 		}
 		if (map[y + 1])
 		{

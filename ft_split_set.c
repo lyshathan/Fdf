@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_set.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:36:48 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/12 14:29:06 by lthan            ###   ########.fr       */
+/*   Updated: 2024/12/13 18:35:39 by ly-sha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,11 @@ char	**free_split(char **tab, size_t k)
 	while (i < k)
 	{
 		free(tab[i]);
-		// printf(GREEN"Free alloc at %p(free_split)\n"RESET, tab[i]);
 		i++;
 	}
 	free(tab);
-	// printf(GREEN"Free alloc at %p(free_split)\n"RESET, tab);
 	tab = NULL;
-	return (tab);
+	return (NULL);
 }
 
 char	**ft_split_set(char const *s, char *charset)

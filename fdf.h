@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:01:33 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/12 17:56:52 by lthan            ###   ########.fr       */
+/*   Updated: 2024/12/13 18:29:43 by ly-sha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,49 @@
 #define BLUE    "\033[1;34m"
 #define RESET   "\033[0m"
 
+# ifndef WIDTH
+#  define WIDTH 1000
+# endif
+
+# ifndef HEIGHT
+#  define HEIGHT 700
+# endif
+
+# ifndef ESC_KEY
 # define ESC_KEY 65307
+# endif
+
+# ifndef COLOR
+# define COLOR 0x0FFFF00
+# endif
+
+typedef struct	s_map_info {
+	float	lowest_x;
+	float	highest_x;
+	float	lowest_y;
+	float	highest_y;
+	float	size_map_x;
+	float	size_map_y;
+}				t_map_info;
 
 typedef struct	s_point {
 	float	x;
 	float	y;
 	int		*z;
-	int		color;
+	int		col;
 }				t_point;
 
 typedef struct s_setup {
 	void	*mlx;
 	void	*win;
 	int		scale;
-	int		shift;
-	int		h_z;
+	float		shift_x;
+	float		shift_y;
+	float		h_z;
 	t_point **map;
 	int     width;
     int     height;
 }				t_setup;
-
 
 typedef struct s_img {
     void    *img_ptr;   // Pointer to the image
@@ -94,9 +117,11 @@ void	print_map(t_point **map);
 int	close_esc(int keycode, t_setup *stp);
 int	close_cross(t_setup *stp);
 
-//FINS SCALE + SHIFT
-void	find_scale(t_point **map, t_setup *stp);
+//SET MAP INFO + SCALE + SHIFT
+void	set_map_info(t_point **map, t_map_info *map_info);
+void	find_scale(t_map_info map_info, t_setup *stp);
 
-void	clear_all(t_point **map);
+//CLEAR
+void	*clear_all(t_point **map);
 
 #endif

@@ -3,63 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   find_scale.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:19:14 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/12 17:59:32 by lthan            ###   ########.fr       */
+/*   Updated: 2024/12/13 18:18:42 by ly-sha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	find_scale(t_point **map, t_setup *stp)
+void	initial_map_info(t_point **map, t_map_info *map_info)
 {
-	int		x;
-	int		y;
-	float	lowest_x;
-	float	highest_x;
-	float	lowest_y;
-	float	highest_y;
-	int		scale;
+	map_info->lowest_x = map[0][0].x;
+	map_info->highest_x = map[0][0].x;
+	map_info->lowest_y = map[0][0].y;
+	map_info->highest_y = map[0][0].y;
+}
 
-	lowest_x = map[0][0].x;
-	highest_x = map[0][0].x;
-	lowest_y = map[0][0].y;
-	highest_y = map[0][0].y;
-	
+void	set_map_info(t_point **map, t_map_info *map_info)
+{
+	int	x;
+	int	y;
+
+	initial_map_info(map, map_info);
 	y = 0;
 	while (map[y])
 	{
 		x = 0;
 		while (map[y][x].z)
 		{
-			if (map[y][x].x < lowest_x)
-				lowest_x = map[y][x].x;
-			if (map[y][x].x > highest_x)
-				highest_x = map[y][x].x;
-			if (map[y][x].y < lowest_y)
-				lowest_y = map[y][x].y;
-			if (map[y][x].y > highest_y)
-				highest_y = map[y][x].y;
+			if (map[y][x].x < map_info->lowest_x)
+				map_info->lowest_x = map[y][x].x;
+			if (map[y][x].x > map_info->highest_x)
+				map_info->highest_x = map[y][x].x;
+			if (map[y][x].y < map_info->lowest_y)
+				map_info->lowest_y = map[y][x].y;
+			if (map[y][x].y > map_info->highest_y)
+				map_info->highest_y = map[y][x].y;
 			x++;
 		}
 		y++;
 	}
-	printf ("\n");
-	printf(RED"lowest x = %f	|| highest x = %f	|| size max x = %f\n", lowest_x, highest_x, (ft_abs(lowest_x - highest_x)));
-	printf("lowest y = %f	|| highest y = %f	|| size max y = %f\n"RESET, lowest_y, highest_y, (ft_abs(lowest_y - highest_y)));
-
-
-	if (stp->width / ft_abs(lowest_x - highest_x) < stp->height / ft_abs(lowest_y - highest_y))
-		scale = stp->width * 0.8 / ft_abs(lowest_x - highest_x);
-	else
-		scale = stp->height * 0.8 / ft_abs(lowest_y - highest_y);
-
-	printf("SCALE = %d\n", scale);
-	stp->scale = scale;
+	map_info->size_map_x = ft_abs(map_info->lowest_x - map_info->highest_x);
+	map_info->size_map_y = ft_abs(map_info->lowest_y - map_info->highest_y);
 }
 
-// int	find_shift_x(t_point **map, t_setup stp)
-// {
-	
-// }
+void	find_scale(t_map_info map_info, t_setup *stp)
+{
+	int		scale;
+	float	shift_neg_x;
+	float	shift_neg_y;
+
+	if (stp->width / map_info.size_map_x < stp->height / map_info.size_map_y)
+		scale = stp->width * 0.9 / map_info.size_map_x;
+	else
+		scale = stp->height * 0.9 / map_info.size_map_y;
+	stp->scale = scale;
+	if (map_info.lowest_x < 0)
+		shift_neg_x = ft_abs(map_info.lowest_x * stp->scale);
+	else
+		shift_neg_x = 0;
+	if (map_info.lowest_y < 0)
+		shift_neg_y = ft_abs(map_info.lowest_y * stp->scale);
+	else
+		shift_neg_y = 0;
+	stp->shift_x = (stp->width
+			- (map_info.size_map_x * stp->scale)) / 2 + shift_neg_x;
+	stp->shift_y = (stp->height
+			- (map_info.size_map_y * stp->scale)) / 2 + shift_neg_y;
+}
