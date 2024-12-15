@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/12/14 14:54:32 by ly-sha            #+#    #+#              #
+#    Updated: 2024/12/15 20:02:11 by ly-sha           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = fdf
@@ -5,13 +17,15 @@ RM = rm -rf
 
 SRCS = fdf.c \
 fdf_utils.c \
-parse_map.c \
-ft_split_set.c \
-set_iso.c \
 draw_grid.c \
-hook.c \
+find_hz.c \
 find_scale.c \
+ft_split_set.c \
+hook.c \
+parse_map.c \
+set_iso.c \
 print_map.c
+#CAUTION##################
 
 OBJS_DIR = objects
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)

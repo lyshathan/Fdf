@@ -58,6 +58,7 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "github.copilot.editor.enableAutoCompletions": false,
   "files.associations": {
-    "fdf.h": "c"
+    "fdf.h": "c",
+    "limits.h": "c"
   }
 }

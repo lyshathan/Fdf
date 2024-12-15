@@ -6,7 +6,7 @@
 /*   By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 08:02:19 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/13 18:53:12 by ly-sha           ###   ########.fr       */
+/*   Updated: 2024/12/14 14:34:14 by ly-sha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,10 @@ t_point	*ft_parse_line(int fd, int y)
 	parse_line = ft_calloc((len + 1), sizeof(t_point));
 	if (!parse_line)
 		return (NULL);
-	i = 0;
-	while (split[i])
-	{
+	i = -1;
+	while (split[++i])
 		if (!set_point(split[i], i, y, parse_line))
 			return ((t_point *)*free_split(split, len));
-		i++;
-	}
 	ft_free(line);
 	free_split(split, len);
 	return (parse_line);

@@ -6,13 +6,11 @@
 /*   By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:04:29 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/13 18:29:05 by ly-sha           ###   ########.fr       */
+/*   Updated: 2024/12/15 20:44:41 by ly-sha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-
 
 void	*clear_all(t_point **map)
 {
@@ -80,16 +78,31 @@ void	fdf(char **arv)
 	t_img		img;
 
 	stp.width = WIDTH;
-	if (arv[2])
-		stp.width = ft_atoi(arv[2]);
 	stp.height = HEIGHT;
+	if (arv[2])
+	{
+		// ft_printf("arv 2");
+		stp.width = ft_atoi(arv[2]);
+	}
 	if (arv[3])
+	{
+		// ft_printf("arv 3");
 		stp.height = ft_atoi(arv[3]);
+	}
 	stp.mlx = mlx_init();
 	stp.win = mlx_new_window(stp.mlx, stp.width, stp.height, "Fdf");
-	stp.h_z = 5;
 	stp.map = ft_parse_map(arv[1]);
+
+	stp.h_z = find_average_gap(stp.map);
+
+	// stp.h_z = 10;
+
+	printf("hz = %f\n", stp.h_z);
+
+
 	set_map_iso(stp, stp.map);
+	// print_map(stp.map);
+
 	set_map_info(stp.map, &map_info);
 	find_scale(map_info, &stp);
 	print_image(&img, &stp);

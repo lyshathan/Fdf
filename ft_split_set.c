@@ -6,7 +6,7 @@
 /*   By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:36:48 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/13 18:35:39 by ly-sha           ###   ########.fr       */
+/*   Updated: 2024/12/14 14:47:30 by ly-sha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ char	*ft_strdup_word(char *s, char *charset, size_t i)
 		i++;
 	}
 	str = malloc ((len + 1) * sizeof(char));
-	// printf(RED"Mem alloc at %p(strdup_word)\n"RESET, str);
 	if (!str)
 		return (NULL);
 	i = i - len;
@@ -115,18 +114,3 @@ char	**ft_split_set(char const *s, char *charset)
 	tab[k] = NULL;
 	return (tab);
 }
-
-// #include <stdio.h>
-// int	main(int arc, char **arv)
-// {
-// 	(void)arc;
-
-// 	char **tab = ft_split_set(arv[1], arv[2]);
-// 	int k = 0;
-// 	while (tab[k] != NULL)
-// 	{
-// 		printf("%d --> #%s#\n", k, tab[k]);
-// 		k++;
-// 	}
-// 	return (0);
-// }
