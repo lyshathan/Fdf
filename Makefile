@@ -18,7 +18,7 @@ set_iso.c
 OBJS_DIR = objects
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 
-MINILIBX_PATH = ./minilibx-linux
+MINILIBX_PATH = ./mlx_linux
 MINILIBX = $(MINILIBX_PATH)/libmlx.a
 
 LIBFT_PATH = ./libft
