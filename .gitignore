@@ -5,3 +5,5 @@ fr.subject.pdf
 ./objects
 objects
 fdf
+./*libft.a
+./libft/objects
