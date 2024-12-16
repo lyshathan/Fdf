@@ -6,7 +6,7 @@
 /*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:45:15 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/16 13:09:44 by lthan            ###   ########.fr       */
+/*   Updated: 2024/12/16 14:36:29 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ void	*clear_all(t_point **map)
 
 int	clear_ending(t_setup stp)
 {
-	clear_all(stp.map);
+	if (stp.map)
+		clear_all(stp.map);
 	if (stp.win)
 		mlx_destroy_window(stp.mlx, stp.win);
 	if (stp.mlx)
 		mlx_destroy_display(stp.mlx);
-	free(stp.mlx);
+	ft_free(stp.mlx);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:01:33 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/16 14:18:04 by lthan            ###   ########.fr       */
+/*   Updated: 2024/12/16 15:14:46 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <mlx.h>
 # include <math.h>
 # include <stdio.h>
+#include <errno.h>
 
 # define RED     "\033[1;31m"
 # define GREEN   "\033[1;32m"
@@ -67,6 +68,10 @@
 #  define MINUS 65453
 # endif
 
+# ifndef ROTATION
+#  define ROTATION 32
+# endif
+
 typedef struct s_map_info
 {
 	float	lowest_x;
@@ -104,6 +109,7 @@ typedef struct s_setup
 	float	shift_x;
 	float	shift_y;
 	float	h_z;
+	float	angle;
 	t_point	**map;
 	int		width;
 	int		height;

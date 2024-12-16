@@ -6,7 +6,7 @@
 /*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:46:12 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/16 13:15:41 by lthan            ###   ########.fr       */
+/*   Updated: 2024/12/16 15:14:52 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,20 @@ int	key_hook(int keycode, t_setup *stp)
 		stp->shift_x -= 100;
 	if (keycode == RIGHT)
 		stp->shift_x += 100;
+	else if (keycode == ROTATION)
+	{
+		stp->angle -= 0.1;
+		set_map_iso(*stp, stp->map);
+	}
 	else if (keycode == PLUS)
 	{
+		stp->h_z = stp->h_z / 1.05;
 		set_map_iso(*stp, stp->map);
-		stp->h_z -= 10;
 	}
 	else if (keycode == MINUS)
 	{
+		stp->h_z = stp->h_z * 1.05;
 		set_map_iso(*stp, stp->map);
-		stp->h_z += 10;
 	}
 	print_image(stp);
 	return (0);

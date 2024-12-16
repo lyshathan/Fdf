@@ -6,7 +6,7 @@
 /*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:45:39 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/16 13:07:41 by lthan            ###   ########.fr       */
+/*   Updated: 2024/12/16 15:03:48 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 float	iso_x(t_setup stp, t_point point, int x, int y)
 {
 	float	dest_x;
-	double	angle;
+	// double	angle;
 
-	angle = 120;
-	dest_x = (x * cos(angle)) + (y * cos(angle + 2))
-		+ ((*(point.z) / stp.h_z) * cos(angle - 2));
+	// angle = 120;
+	dest_x = (x * cos(stp.angle)) + (y * cos(stp.angle + 2))
+		+ ((*(point.z) / stp.h_z) * cos(stp.angle - 2));
 	return (dest_x);
 }
 
 float	iso_y(t_setup stp, t_point point, int x, int y)
 {
 	float	dest_y;
-	double	angle;
+	// double	angle;
 
-	angle = 120;
-	dest_y = (x * sin(angle)) + (y * sin(angle + 2))
-		+ ((*(point.z) / stp.h_z) * sin(angle - 2));
+	// angle = 120;
+	dest_y = (x * sin(stp.angle)) + (y * sin(stp.angle + 2))
+		+ ((*(point.z) / stp.h_z) * sin(stp.angle - 2));
 	return (dest_y);
 }
 

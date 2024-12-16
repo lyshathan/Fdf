@@ -6,7 +6,7 @@
 /*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:04:29 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/16 14:08:04 by lthan            ###   ########.fr       */
+/*   Updated: 2024/12/16 15:02:38 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	init_setup(t_setup *stp, t_img *img)
 	stp->img = img;
 	stp->width = WIDTH;
 	stp->height = HEIGHT;
+	stp->angle = 120;
 	stp->h_z = find_average_gap(stp->map);
 	set_map_iso(*stp, stp->map);
 }
@@ -67,14 +68,16 @@ t_point	**ft_parse_map(char *filename)
 	int		fd;
 	t_point	**map;
 
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (NULL);
 	count_line = ft_count_line(filename);
+	if (count_line == 0)
+		return (NULL);
 	map = ft_calloc((count_line + 1), sizeof(t_point *));
 	if (!map)
 		return (NULL);
 	i = 0;
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		return (clear_all(map));
 	while (i < count_line)
 	{
 		map[i] = ft_parse_line(fd, i);
@@ -94,7 +97,7 @@ int	fdf(char **arv)
 
 	stp.map = ft_parse_map(arv[1]);
 	if (!stp.map)
-		return (clear_ending(stp));
+		return (0);
 	init_setup(&stp, &img);
 	stp.mlx = mlx_init();
 	stp.win = mlx_new_window(stp.mlx, stp.width, stp.height, "Fdf");
