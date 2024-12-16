@@ -166,3 +166,41 @@ void	aff_map(t_setup stp, t_point **map)
 		y++;
 	}
 }
+
+
+/* t_point	*ft_parse_line(int fd, int y)
+{
+	char	*line;
+	char	**split;
+	int		i;
+	int		len;
+	t_point	*parse_line;
+
+	line = get_next_line(fd);
+	if (!line)
+		return (NULL);
+	split = ft_split_set(line, " \n");
+	if (!split)
+		return (ft_free(line));
+	len = 0;
+	while (split[len])
+		len++;
+	parse_line = ft_calloc((len + 1), sizeof(t_point));
+	if (!parse_line)
+	{
+		ft_free(line);
+		return (free_parse_line(split, len, parse_line, 0));
+	}
+	i = -1;
+	while (split[++i])
+	{
+		if (!set_point(split[i], i, y, parse_line))
+		{
+			ft_free(line);
+			return (free_parse_line(split, len, parse_line, i));
+		}
+	}
+	ft_free(line);
+	free_split(split, len);
+	return (parse_line);
+} */

@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:04:29 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/15 20:44:41 by ly-sha           ###   ########.fr       */
+/*   Updated: 2024/12/16 14:08:04 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	*clear_all(t_point **map)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (map[y])
-	{
-		x = 0;
-		while (map[y][x].z)
-		{
-			free(map[y][x].z);
-			x++;
-		}
-		ft_free(map[y]);
-		y++;
-	}
-	ft_free(map);
-	return (NULL);
-}
 
 void	put_pixel_to_image(t_img *img, int x, int y, int color)
 {
@@ -59,63 +38,78 @@ void	put_pixel_to_image(t_img *img, int x, int y, int color)
 	}
 }
 
-void	print_image(t_img *img, t_setup *stp)
+void	print_image(t_setup *stp)
 {
-	img->width = stp->width;
-	img->height = stp->height;
-	img->img_ptr = mlx_new_image(stp->mlx, img->width, img->height);
-	img->data = mlx_get_data_addr(img->img_ptr, &img->bpp,
-			&img->size_line, &img->endian);
-	draw_grid(img, *stp, stp->map);
-	mlx_put_image_to_window(stp->mlx, stp->win, img->img_ptr, 0, 0);
-	mlx_destroy_image(stp->mlx, img->img_ptr);
+	stp->img->width = stp->width;
+	stp->img->height = stp->height;
+	stp->img->img_ptr
+		= mlx_new_image(stp->mlx, stp->img->width, stp->img->height);
+	stp->img->data = mlx_get_data_addr(stp->img->img_ptr, &stp->img->bpp,
+			&stp->img->size_line, &stp->img->endian);
+	draw_grid(stp->img, *stp, stp->map);
+	mlx_put_image_to_window(stp->mlx, stp->win, stp->img->img_ptr, 0, 0);
+	mlx_destroy_image(stp->mlx, stp->img->img_ptr);
 }
 
-void	fdf(char **arv)
+void	init_setup(t_setup *stp, t_img *img)
+{
+	stp->img = img;
+	stp->width = WIDTH;
+	stp->height = HEIGHT;
+	stp->h_z = find_average_gap(stp->map);
+	set_map_iso(*stp, stp->map);
+}
+
+t_point	**ft_parse_map(char *filename)
+{
+	int		count_line;
+	int		i;
+	int		fd;
+	t_point	**map;
+
+	count_line = ft_count_line(filename);
+	map = ft_calloc((count_line + 1), sizeof(t_point *));
+	if (!map)
+		return (NULL);
+	i = 0;
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (clear_all(map));
+	while (i < count_line)
+	{
+		map[i] = ft_parse_line(fd, i);
+		if (!map[i])
+			return (clear_all(map));
+		i++;
+	}
+	close(fd);
+	return (map);
+}
+
+int	fdf(char **arv)
 {
 	t_setup		stp;
 	t_map_info	map_info;
 	t_img		img;
 
-	stp.width = WIDTH;
-	stp.height = HEIGHT;
-	if (arv[2])
-	{
-		// ft_printf("arv 2");
-		stp.width = ft_atoi(arv[2]);
-	}
-	if (arv[3])
-	{
-		// ft_printf("arv 3");
-		stp.height = ft_atoi(arv[3]);
-	}
+	stp.map = ft_parse_map(arv[1]);
+	if (!stp.map)
+		return (clear_ending(stp));
+	init_setup(&stp, &img);
 	stp.mlx = mlx_init();
 	stp.win = mlx_new_window(stp.mlx, stp.width, stp.height, "Fdf");
-	stp.map = ft_parse_map(arv[1]);
-
-	stp.h_z = find_average_gap(stp.map);
-
-	// stp.h_z = 10;
-
-	printf("hz = %f\n", stp.h_z);
-
-
-	set_map_iso(stp, stp.map);
-	// print_map(stp.map);
-
+	if (!stp.mlx || !stp.win)
+	{
+		return (clear_ending(stp));
+	}
 	set_map_info(stp.map, &map_info);
 	find_scale(map_info, &stp);
-	print_image(&img, &stp);
+	print_image(&stp);
 	mlx_hook(stp.win, 2, 1L << 0, close_esc, &stp);
 	mlx_hook(stp.win, 17, 0L, close_cross, &stp);
+	mlx_key_hook(stp.win, key_hook, &stp);
+	mlx_mouse_hook(stp.win, mouse_zoom, &stp);
 	mlx_loop(stp.mlx);
-	clear_all(stp.map);
-}
-
-int	main(int arc, char **arv)
-{
-	if (arc < 2 || arc > 4)
-		return (1);
-	fdf(arv);
-	return (0);
+	clear_ending(stp);
+	return (1);
 }

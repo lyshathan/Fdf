@@ -1,36 +1,24 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/14 14:54:32 by ly-sha            #+#    #+#              #
-#    Updated: 2024/12/15 20:02:11 by ly-sha           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = fdf
 RM = rm -rf
 
-SRCS = fdf.c \
+SRCS = main.c \
+fdf.c \
 fdf_utils.c \
+clear_functions.c \
 draw_grid.c \
 find_hz.c \
 find_scale.c \
 ft_split_set.c \
 hook.c \
-parse_map.c \
-set_iso.c \
-print_map.c
-#CAUTION##################
+parse_line.c \
+set_iso.c
 
 OBJS_DIR = objects
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 
-MINILIBX_PATH = ./minilibx-mac
+MINILIBX_PATH = ./minilibx-linux
 MINILIBX = $(MINILIBX_PATH)/libmlx.a
 
 LIBFT_PATH = ./libft
@@ -89,7 +77,7 @@ get_next_line.c \
 get_next_line_utils.c
 
 LIBFT_FILES = $(addprefix $(LIBFT_PATH)/, $(LIBFT_FUNCTIONS)) $(LIBFT_PATH)/libft.h $(LIBFT_PATH)/Makefile
-MLX_FILES = $(MINILIBX_PATH)/mlx.h $(MINILIBX_PATH)/mlx_int.h $(MINILIBX_PATH)/Makefile
+MLX_FILES = $(MINILIBX_PATH)/mlx.h $(MINILIBX_PATH)/mlx_int.h $(MINILIBX_PATH)/Makefile $(MINILIBX_PATH)/Makefile.mk
 
 all: $(NAME)
 
@@ -98,11 +86,11 @@ $(OBJS_DIR):
 
 $(OBJS_DIR)/%.o: %.c fdf.h Makefile
 	$(CC) $(CFLAGS) -I$(MINILIBX_PATH) -I$(LIBFT_PATH) -c $< -o $@
-
+	
 $(NAME): $(OBJS_DIR) $(OBJS) $(LIBFT_FILES) $(MLX_FILES)
 	make -C $(MINILIBX_PATH)
 	make -C $(LIBFT_PATH)
-	$(CC) $(CFLAGS) $(OBJS) -L$(MINILIBX_PATH) -lmlx -framework OpenGL -framework AppKit -I$(MINILIBX_PATH) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -L$(MINILIBX_PATH) -lmlx -lmlx_Linux -I$(MINILIBX_PATH) -lXext -lX11 -lm -lz $(LIBFT) -o $(NAME)
 
 clean:
 	make -C $(LIBFT_PATH) clean

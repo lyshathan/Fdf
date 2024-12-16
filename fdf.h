@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:01:33 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/15 20:43:46 by ly-sha           ###   ########.fr       */
+/*   Updated: 2024/12/16 14:18:04 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <mlx.h>
 # include <math.h>
-# include <stdio.h>		///////////////CAUTION!
+# include <stdio.h>
 
 # define RED     "\033[1;31m"
 # define GREEN   "\033[1;32m"
@@ -28,19 +28,43 @@
 # define RESET   "\033[0m"
 
 # ifndef WIDTH
-#  define WIDTH 1000
+#  define WIDTH 1800
 # endif
 
 # ifndef HEIGHT
-#  define HEIGHT 700
+#  define HEIGHT 1500
+# endif
+
+# ifndef COLOR
+#  define COLOR 0x0FFFFFF
 # endif
 
 # ifndef ESC_KEY
 #  define ESC_KEY 65307
 # endif
 
-# ifndef COLOR
-#  define COLOR 0x0FFFFFF
+# ifndef UP
+#  define UP 65362
+# endif
+
+# ifndef DOWN
+#  define DOWN 65364
+# endif
+
+# ifndef LEFT
+#  define LEFT 65361
+# endif
+
+# ifndef RIGHT
+#  define RIGHT 65363
+# endif
+
+# ifndef PLUS
+#  define PLUS 65451
+# endif
+
+# ifndef MINUS
+#  define MINUS 65453
 # endif
 
 typedef struct s_map_info
@@ -61,19 +85,6 @@ typedef struct s_point
 	int		col;
 }			t_point;
 
-typedef struct s_setup
-{
-	void	*mlx;
-	void	*win;
-	int		scale;
-	float	shift_x;
-	float	shift_y;
-	float		h_z;
-	t_point	**map;
-	int		width;
-	int		height;
-}			t_setup;
-
 typedef struct s_img
 {
 	void	*img_ptr;
@@ -85,18 +96,34 @@ typedef struct s_img
 	int		height;
 }			t_img;
 
+typedef struct s_setup
+{
+	void	*mlx;
+	void	*win;
+	int		scale;
+	float	shift_x;
+	float	shift_y;
+	float	h_z;
+	t_point	**map;
+	int		width;
+	int		height;
+	t_img	*img;
+}			t_setup;
+
 //UTILS
 float	ft_abs(float nb);
 void	*ft_free(void *data);
 int		ft_convert_base_hexa(char *hexa);
 char	**free_split(char **tab, size_t k);
 char	**ft_split_set(char const *s, char *charset);
+int		ft_count_line(char *filename);
 
 //PARSE MAP
-int		ft_count_line(char *filename);
-t_point	*ft_parse_line(int fd, int y);
 int		set_point(char *s, int index, int y, t_point *parse);
-t_point	**ft_parse_map(char *filename);
+void	*free_parse_line(char **split, int len, t_point *parse_line, int i);
+t_point	*allocate_parse_line(char **split, char *line, int *len);
+int		fill_parse_line(char **split, int y, t_point *parse_line);
+t_point	*ft_parse_line(int fd, int y);
 
 //SET ISO
 float	iso_x(t_setup stp, t_point point, int x, int y);
@@ -114,14 +141,19 @@ void	draw_grid(t_img *img, t_setup stp, t_point **map);
 
 //DISPLAY IMAGE
 void	put_pixel_to_image(t_img *img, int x, int y, int color);
+void	print_image(t_setup *stp);
 
 //HOOK
 int		close_esc(int keycode, t_setup *stp);
 int		close_cross(t_setup *stp);
+int		mouse_zoom(int button, int x, int y, t_setup *stp);
+int		key_hook(int keycode, t_setup *stp);
 
 //CLEAR
 void	*clear_all(t_point **map);
+int		clear_ending(t_setup stp);
 
-void	print_map(t_point **map);	/////////////////CAUTION!
+//FDF
+int		fdf(char **arv);
 
 #endif

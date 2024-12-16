@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_map.c                                        :+:      :+:    :+:   */
+/*   clear_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:13:07 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/15 20:04:58 by ly-sha           ###   ########.fr       */
+/*   Created: 2024/12/16 12:45:15 by lthan             #+#    #+#             */
+/*   Updated: 2024/12/16 13:09:44 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	print_map(t_point **map)
+void	*clear_all(t_point **map)
 {
 	int	x;
 	int	y;
@@ -23,13 +23,23 @@ void	print_map(t_point **map)
 		x = 0;
 		while (map[y][x].z)
 		{
-			printf("%f|", map[y][x].y);
-			printf("%f	", map[y][x].x);
-			// ft_printf("%d	", *(map[y][x].z));
-			// ft_printf("%d	", map[y][x].col);
+			free(map[y][x].z);
 			x++;
 		}
-		ft_printf("\n");
+		ft_free(map[y]);
 		y++;
 	}
+	ft_free(map);
+	return (NULL);
+}
+
+int	clear_ending(t_setup stp)
+{
+	clear_all(stp.map);
+	if (stp.win)
+		mlx_destroy_window(stp.mlx, stp.win);
+	if (stp.mlx)
+		mlx_destroy_display(stp.mlx);
+	free(stp.mlx);
+	return (0);
 }

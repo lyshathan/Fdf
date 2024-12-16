@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_hz.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:58:39 by ly-sha            #+#    #+#             */
-/*   Updated: 2024/12/15 20:48:50 by ly-sha           ###   ########.fr       */
+/*   Updated: 2024/12/16 08:15:33 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 #include <limits.h>
 #include <stdio.h>
 
-float	find_average_gap(t_point **map)
+float	average_gap_x(t_point **map)
 {
-	float	current_gap;
 	float	av_gap;
 	int		count;
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 
 	av_gap = 0;
 	count = 0;
@@ -31,11 +30,9 @@ float	find_average_gap(t_point **map)
 		x = 0;
 		while (map[y][x + 1].z)
 		{
-			current_gap = ft_abs(*map[y][x].z - *map[y][x + 1].z);
-			// printf("y = %d, x = %d, current gap = %f\n", y, x, current_gap);
-			if (current_gap != 0)
+			if (ft_abs(*map[y][x].z - *map[y][x + 1].z) != 0)
 			{
-				av_gap = av_gap + current_gap;
+				av_gap = av_gap + ft_abs(*map[y][x].z - *map[y][x + 1].z);
 				count++;
 			}
 			x++;
@@ -44,9 +41,43 @@ float	find_average_gap(t_point **map)
 	}
 	if (count == 0)
 		return (1);
-	av_gap = av_gap / count;
-	printf("average gap = %f\n", av_gap);
-	return (av_gap);
+	return (av_gap / count);
 }
 
+float	average_gap_y(t_point **map, int count)
+{
+	float	av_gap;
+	int		x;
+	int		y;
 
+	av_gap = 0;
+	x = 0;
+	y = 0;
+	while (map[y][x].z)
+	{
+		y = 0;
+		while (map[y + 1])
+		{
+			if (ft_abs(*map[y][x].z - *map[y + 1][x].z) != 0)
+			{
+				av_gap = av_gap + ft_abs(*map[y][x].z - *map[y + 1][x].z);
+				count++;
+			}
+			y++;
+		}
+		x++;
+	}
+	if (count == 0)
+		return (1);
+	return (av_gap / count);
+}
+
+float	find_average_gap(t_point **map)
+{
+	float	av_gap;
+	int		count;
+
+	count = 0;
+	av_gap = (average_gap_x(map) + average_gap_y(map, count)) / 2;
+	return (av_gap);
+}

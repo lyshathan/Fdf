@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_map.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:13:07 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/16 13:19:53 by lthan            ###   ########.fr       */
+/*   Created: 2024/12/16 12:41:49 by lthan             #+#    #+#             */
+/*   Updated: 2024/12/16 13:16:06 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	print_map(t_point **map)
+int	main(int arc, char **arv)
 {
-	int	x;
-	int	y;
-
-	y = 0;
-	while (map[y])
+	if (arc != 2)
+		return (1);
+	if (!fdf(arv))
 	{
-		x = 0;
-		while (map[y][x].z)
-		{
-			printf("%f|", map[y][x].y);
-			printf("%f	", map[y][x].x);
-			ft_printf("%d	", *(map[y][x].z));
-			ft_printf("%d	", map[y][x].col);
-			x++;
-		}
-		ft_printf("\n");
-		y++;
+		perror("Error opening or parsing file");
+		return (1);
 	}
+	return (0);
 }
