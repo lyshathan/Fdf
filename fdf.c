@@ -6,7 +6,7 @@
 /*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:04:29 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/17 08:37:53 by lthan            ###   ########.fr       */
+/*   Updated: 2024/12/17 08:56:01 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,21 @@ void	put_pixel_to_image(t_img *img, int x, int y, int color)
 	{
 		dst = img->data + (y * img->size_line + x * (img->bpp / 8));
 		*(unsigned int *)dst = color;
-		// if (img->endian == 0)
-		// {
-		// 	dst[0] = (color >> 0) & 0xFF;
-		// 	dst[1] = (color >> 8) & 0xFF;
-		// 	dst[2] = (color >> 16) & 0xFF;
-		// 	if (img->bpp == 32)
-		// 		dst[3] = (color >> 24) & 0xFF;
-		// }
-		// else
-		// {
-		// 	dst[0] = (color >> 24) & 0xFF;
-		// 	dst[1] = (color >> 16) & 0xFF;
-		// 	dst[2] = (color >> 8) & 0xFF;
-		// 	dst[3] = (color >> 0) & 0xFF;
-		// }
+		if (img->endian == 0)
+		{
+			dst[0] = (color >> 0) & 0xFF;
+			dst[1] = (color >> 8) & 0xFF;
+			dst[2] = (color >> 16) & 0xFF;
+			if (img->bpp == 32)
+				dst[3] = (color >> 24) & 0xFF;
+		}
+		else
+		{
+			dst[0] = (color >> 24) & 0xFF;
+			dst[1] = (color >> 16) & 0xFF;
+			dst[2] = (color >> 8) & 0xFF;
+			dst[3] = (color >> 0) & 0xFF;
+		}
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:58:39 by ly-sha            #+#    #+#             */
-/*   Updated: 2024/12/17 08:40:51 by lthan            ###   ########.fr       */
+/*   Updated: 2024/12/17 08:56:13 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,3 @@ float	find_average_gap(t_point **map)
 		return (1);
 	return (av_gap / count);
 }
-
