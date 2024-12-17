@@ -6,7 +6,7 @@
 /*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 08:02:19 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/16 14:13:37 by lthan            ###   ########.fr       */
+/*   Updated: 2024/12/17 08:36:05 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	set_point(char *s, int index, int y, t_point *parse)
 	if (!parse[index].z)
 		return (0);
 	*(parse[index].z) = ft_atoi(s);
+	if (*s == '-')
+		s++;
 	while ((*s >= '0' && *s <= '9') || *s == ',')
 		s++;
 	if (*s == 'x')

@@ -6,7 +6,7 @@
 /*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:01:33 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/16 15:14:46 by lthan            ###   ########.fr       */
+/*   Updated: 2024/12/17 08:25:31 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <mlx.h>
 # include <math.h>
 # include <stdio.h>
-#include <errno.h>
+# include <errno.h>
 
 # define RED     "\033[1;31m"
 # define GREEN   "\033[1;32m"
@@ -37,7 +37,7 @@
 # endif
 
 # ifndef COLOR
-#  define COLOR 0x0FFFFFF
+#  define COLOR 0x00FFFFFF
 # endif
 
 # ifndef ESC_KEY
