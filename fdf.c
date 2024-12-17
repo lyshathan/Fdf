@@ -6,7 +6,7 @@
 /*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:04:29 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/17 08:56:01 by lthan            ###   ########.fr       */
+/*   Updated: 2024/12/17 09:07:33 by lthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,29 +89,6 @@ t_point	**ft_parse_map(char *filename)
 	return (map);
 }
 
-void	print_map(t_point **map)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (map[y])
-	{
-		x = 0;
-		while (map[y][x].z)
-		{
-			// printf("%f|", map[y][x].y);
-			// printf("%f	", map[y][x].x);
-			// ft_printf("%d	", *(map[y][x].z));
-			ft_printf("%d	", map[y][x].col);
-			x++;
-		}
-		ft_printf("\n");
-		y++;
-	}
-}
-
-
 int	fdf(char **arv)
 {
 	t_setup		stp;
@@ -121,7 +98,6 @@ int	fdf(char **arv)
 	stp.map = ft_parse_map(arv[1]);
 	if (!stp.map)
 		return (0);
-	// print_map(stp.map);
 	init_setup(&stp, &img);
 	stp.mlx = mlx_init();
 	stp.win = mlx_new_window(stp.mlx, stp.width, stp.height, "Fdf");
