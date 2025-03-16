@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lthan <lthan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:01:33 by lthan             #+#    #+#             */
-/*   Updated: 2024/12/17 08:25:31 by lthan            ###   ########.fr       */
+/*   Updated: 2025/03/16 19:09:02 by ly-sha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include "./libft/libft.h"
-# include "./libft/ft_printf.h"
-# include "./libft/get_next_line.h"
+# include "../libft/libft.h"
+# include "../libft/ft_printf.h"
+# include "../libft/get_next_line.h"
 # include <fcntl.h>
 # include <mlx.h>
 # include <math.h>

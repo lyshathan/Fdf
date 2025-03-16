@@ -3,32 +3,36 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lthan <lthan@student.42.fr>                +#+  +:+       +#+         #
+#    By: ly-sha <ly-sha@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/17 08:14:03 by lthan             #+#    #+#              #
-#    Updated: 2024/12/17 08:14:04 by lthan            ###   ########.fr        #
+#    Updated: 2025/03/16 19:11:16 by ly-sha           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -Iincludes
 NAME = fdf
 RM = rm -rf
 
-SRCS = main.c \
-fdf.c \
-fdf_utils.c \
-clear_functions.c \
-draw_grid.c \
-find_hz.c \
-find_scale.c \
-ft_split_set.c \
-hook.c \
-parse_line.c \
-set_iso.c
+HEADERS = includes/fdf.h
+
+SRCS_DIR = srcs
+SRCS = $(SRCS_DIR)/main.c \
+	$(SRCS_DIR)/fdf.c \
+	$(SRCS_DIR)/fdf_utils.c \
+	$(SRCS_DIR)/clear_functions.c \
+	$(SRCS_DIR)/draw_grid.c \
+	$(SRCS_DIR)/find_hz.c \
+	$(SRCS_DIR)/find_scale.c \
+	$(SRCS_DIR)/ft_split_set.c \
+	$(SRCS_DIR)/hook.c \
+	$(SRCS_DIR)/parse_line.c \
+	$(SRCS_DIR)/set_iso.c
 
 OBJS_DIR = objects
-OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
+OBJS = $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
+#OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 
 MINILIBX_PATH = ./mlx_linux
 MINILIBX = $(MINILIBX_PATH)/libmlx.a
@@ -96,9 +100,9 @@ all: $(NAME)
 $(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)
 
-$(OBJS_DIR)/%.o: %.c fdf.h Makefile
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c Makefile $(HEADERS)
 	$(CC) $(CFLAGS) -I$(MINILIBX_PATH) -I$(LIBFT_PATH) -c $< -o $@
-	
+
 $(NAME): $(OBJS_DIR) $(OBJS) $(LIBFT_FILES) $(MLX_FILES)
 	make -C $(MINILIBX_PATH)
 	make -C $(LIBFT_PATH)
